@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    {% if error_messages %}
+        {{ error_messages }}
+    {% endif %}
+
+    <form action="" method="post">
+        <table>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" name="username" required ></td>
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" required /></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+        <br>
+        <input type="submit" value="Login" />
+    </form>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    {% if error_messages %}
+        {{ error_messages }}
+    {% endif %}
+
+    <h1 align="center">New User Registration</h1>
+    <p align="center">A new user's default password is their username.  They can change it once they login.</p>
+
+    <form action="{% url 'registerloggedin' %}" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" name="name" required /></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" name="email"/></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" required /></td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td><input type="text" name="phone"/></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" name="address"/></td>
+            </tr>
+            <tr>
+                <td>Office Hours:</td>
+                <td><input type="text" name="hours"/></td>
+            </tr>
+            <tr>
+                <td>User Type:</td>
+                <td class="dropdown">
+                    <select name="groupid" required>
+                        <option value="2">Administrator</option>
+                        <option value="3">Instructor</option>
+                        <option value="4">TA</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

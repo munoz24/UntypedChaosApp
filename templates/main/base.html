@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+    <head>
+        <title>FSA</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    </head>
+    <body>
+    <!--
+        <div class="menu">
+            <div id = 'logPage' class="menu_el"><a href="/">LOGIN</a></div>
+            <div id = 'regPage' class="menu_el"><a href="/register">REGISTER</a></div>
+            <div id = 'userPage' class="menu_el"><a href="/user">USER</a></div>
+            <div id = 'logoPage' class="menu_el"><a href="/logout">LOGOUT</a></div>
+        </div>
+    -->
+        <ul class="navbar">
+            <li id="logPage"><a class="inactive" href="/">LOGIN</a></li>
+            <li id="regPage"><a class="inactive" href="/register">REGISTER</a></li>
+            <li id="userPage"><a class="inactive" href="/user">USER</a></li>
+            <li id="courseCat"><a class="inactive" href="/courses">COURSE CATALOG</a></li>
+            <li id="mycourses"><a class="inactive" href="/mycourses">MY COURSES</a></li>
+            <li id="logoPage"><a class="inactive" href="/logout">LOGOUT</a></li>
+        </ul>
+        <br/>
+        <div class="content container">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <script type="text/javascript">
+            function hideReg(){
+                let reg = document.getElementById('regPage');
+                let log = document.getElementById('logPage');
+                let logo = document.getElementById('logoPage');
+                let user = document.getElementById('userPage');
+                let courses = document.getElementById('courseCat');
+                let mycourses = document.getElementById('mycourses');
+                let id = {{ sessionID }};
+                let curPage = window.location.href.split("/")[3];
+                console.log(curPage);
+
+                let curActive = document.getElementsByClassName("active");
+                curActive.className = "inactive";
+                if (curPage == ''){
+                    log.className = "active";
+                } else if (curPage == 'register'){
+                    reg.className = "active";
+                } else if (curPage == 'user' || curPage == 'edituser'){
+                    user.className = "active";
+                } else if (curPage == 'registerloggedin') {
+                    reg.className = "active";
+                } else if (curPage == 'courses' || curPage == 'courseview' || curPage == 'sectionview' || curPage == 'labview') {
+                    courses.className = "active";
+                } else if (curPage == 'mycourses' || curPage == 'mylabs' || curPage == 'mysections' || curPage == 'courseinfo') {
+                    mycourses.className = "active";
+                } else {
+                    logo.className = "active";
+                }
+
+                // Hide the registration page if user is not logged in, or not a supervisor/admin
+                if (id == -1 || id == 1 || id == 2){
+                    reg.style.display = "block";
+                } else {
+                    reg.style.display = "none";
+                }
+
+                // Hide the my courses page if a user is not logged in, or a supervisor or admin is logged in
+                if (id == -1 || id == 1 || id == 2){
+                    mycourses.style.display = "none";
+                } else {
+                    mycourses.style.display = "block";
+                }
+
+                // Hide the login page if a user is logged in, and the logout/user page if a user is not
+                // Hide the courses page if a user is not logged in, and show it if they are
+                if (id == -1){
+                    log.style.display = "block";
+                    logo.style.display = "none";
+                    user.style.display = "none";
+                    courses.style.display = "none";
+                } else {
+                    log.style.display = "none";
+                    logo.style.display = "block";
+                    user.style.display = "block";
+                    courses.style.display = "block";
+                }
+
+                // Hide the logout page if a user is not logged in
+                return
+            }
+            window.onload = hideReg();
+        </script>
+    </body>
+</html>

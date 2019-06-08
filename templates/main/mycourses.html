@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    {% csrf_token %}
+
+    <table width=100%>
+
+        <tr>
+            <td><h1 align="center">Course List</h1></td>
+        </tr>
+
+        <tr>
+            <td id ="courseDATA">
+                    {% for course in allClasses %}
+                            <a class="courseLinks" href="/mysections?info={{ course.name }}">CS{{ course.number }}: {{ course.name }}</a>
+                        <br>
+                    {% endfor %}
+            </td>
+        </tr>
+
+    </table>
+
+{% endblock %}
